@@ -11,10 +11,48 @@ using namespace std;
 
 const string FILENAME = "SortingArray.txt";
 
+int num_scambi, x;
+
 void stampaVettore( string v[], int l ) {
     cout << endl;
     for (int i=0; i<l; i++) cout << v[i] << "\n";
     cout << endl;
+}
+
+void swap(string arr[] , int pos1, int pos2){
+	string temp;
+	temp = arr[pos1];
+	arr[pos1] = arr[pos2];
+	arr[pos2] = temp;
+    num_scambi++;
+
+}
+
+int partition(string arr[], int low, int high, string pivot){
+	int i = low;
+	int j = low;
+	while( i <= high){
+		if(arr[i] > pivot){
+			i++;
+		}
+		else{
+			swap(arr,i,j);
+			i++;
+			j++;
+		}
+	}
+	return j-1;
+}
+
+void quick_sort(string arr[], int low, int high){
+	if(low < high){
+        string pivot = arr[high];
+        int pos = partition(arr, low, high, pivot);
+
+        
+        quick_sort(arr, low, pos-1);
+        quick_sort(arr, pos+1, high);
+	}
 }
 
 int bubbleSort( string v[], int l ) {
@@ -36,6 +74,7 @@ int bubbleSort( string v[], int l ) {
     return numOp;
 }
 
+
 int main()
 {
     ifstream f;
@@ -54,9 +93,29 @@ int main()
     f.open(FILENAME);
     for (int i=0; i<n; i++) getline( f, vs[i] );
 
+    cout << "array iniziale: " << endl;
     stampaVettore(vs, n);
-    int x = bubbleSort(vs, n);
-    cout << "Eseguiti " << x << " confronti." << endl;
+
+    int scelta;
+    cout << "scegli con quale metodo ordinare l'array => [1] bubble sort    [0] quick sort" << endl << "scelta: ";
+    cin >> scelta;
+
+    while (scelta > 1 || scelta < 0) {
+        cout << "[error] digita => [1] bubble sort    [0] quick sort" << endl << "scelta: "; 
+        cin >> scelta;
+    }
+
+    if (scelta) {
+        int x = bubbleSort(vs, n);
+        cout << endl << "eseguiti " << x << " scambi da 'bubble sort'." << endl;
+    }
+    else {
+        num_scambi = 0;
+        quick_sort(vs, 0, n-1);
+        cout << endl << "eseguiti " << num_scambi << " scambi da 'quick sort'." << endl;
+    }
+
+    cout << "arrray ordinato:" << endl;
     stampaVettore(vs, n);
 
     return 0;
