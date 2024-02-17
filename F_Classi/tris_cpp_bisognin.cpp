@@ -61,7 +61,7 @@ class Tris {
         }
 
         // metodo per controllare il vincitore della partita
-        int result, j=0;
+        int result;
         int winner() {
             for (int i=0; i<3; i++) {
                 result = control_column(i);
