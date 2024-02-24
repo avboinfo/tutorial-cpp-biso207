@@ -9,7 +9,7 @@ using namespace std;
     grid == 'O' => cell filled by player2
 */
 class Tris {
-    // zona 'public' => i metodi e attributi sono accessibili sia dentro che fuori della classe
+    // zona 'public' => i metodi e attributi sono accessibili sia dentro che fuori dalla classe
     public:
         char grid[3][3]; // matrice per la griglia => atributo della classe
 
