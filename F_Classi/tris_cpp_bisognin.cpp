@@ -71,10 +71,8 @@ class Tris {
                 if (result != 0) return result;
                 result = control_row(i);
                 if (result != 0) return result;
-                result = control_diagonal();
-                if (result != 0) return result;
             }
-            return 0;
+            return control_diagonal();
         }
 
     // zona 'private' => i metodi e attributi sono accessibili SOLO nella classe
@@ -87,8 +85,7 @@ class Tris {
             for (int i=0; i<3; i++) {
                 char cell = grid[i][col];
                 if (cell == 'X') acc_one++;
-                else if (cell == 'O') acc_two++;
-                else return 0;
+                if (cell == 'O') acc_two++;
             }
 
             if (acc_one == 3) return 1;
@@ -105,8 +102,7 @@ class Tris {
             for (int i=0; i<3; i++) {
                 char cell = grid[row][i];
                 if (cell == 'X') acc_one++;
-                else if (cell == 'O') acc_two++;
-                else return 0;
+                if (cell == 'O') acc_two++;
             }
 
             if (acc_one == 3) return 1;
@@ -120,14 +116,34 @@ class Tris {
             // accumulatori per contare i valori nelle celle di una diagonale
             int acc_one = 0;
             int acc_two = 0;
-            if (grid[0][0] == 'X' && grid[1][1] == 'X' && grid[2][2] == 'X')
+            /*if (grid[0][0] == 'X' && grid[1][1] == 'X' && grid[2][2] == 'X')
                 return 1;
             if (grid[0][2] == 'X' && grid[1][1] == 'X' && grid[2][0] == 'X')
                 return 1;
             if (grid[0][0] == 'O' && grid[1][1] == 'O' && grid[2][2] == 'O')
                 return 2;
             if (grid[0][2] == 'O' && grid[1][1] == 'O' && grid[2][0] == 'O')
-                return 2;
+                return 2;*/
+            for (int i=0; i<3; i++) {
+                char cell = grid[i][i];
+                if (cell == 'X') acc_one++;
+                if (cell == 'O') acc_two++;
+            }
+
+            if (acc_one == 3) return 1;
+            if (acc_two == 3) return 2;
+            else {
+                acc_one = 0; 
+                acc_two = 0;
+                for (int i=0; i<3; i++) {
+                    char cell = grid[i][2-i];
+                    if (cell == 'X') acc_one++;
+                    if (cell == 'O') acc_two++;
+                }
+            }
+
+            if (acc_one == 3) return 1;
+            if (acc_two == 3) return 2;
             return 0;
         }
 };
