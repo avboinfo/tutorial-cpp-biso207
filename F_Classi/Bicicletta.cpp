@@ -9,10 +9,13 @@ class Bicicletta {
   public:
     int raggio;
     string colore;
-    Bicicletta( int r, string c ) {
-        raggio=r;
-        colore=c;
+    // metodo costruttore => chiamato in automatico ogni volta che si crea un parametro della classe
+    Bicicletta() {
+        raggio=10;
+        colore="bianco";
     }
+
+    // metodo pubblico della classe
     void presentati() {
         cout << "Buongiorno, sono una bici di colore " << colore << " e con le ruote " << raggio << "!" << endl;
     }
@@ -20,11 +23,9 @@ class Bicicletta {
 
 int main()
 {
-    Bicicletta x(16,"verdino");
-    Bicicletta y(14,"rossastro");
+    Bicicletta x;
 
     x.presentati();
-    y.presentati();
 
     return 0;
 }

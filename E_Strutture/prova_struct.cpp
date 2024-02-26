@@ -1,8 +1,6 @@
-/*
-** prova_struct.cpp
+/* prova_struct.cpp
 ** Author: IAV 3CIN
-** 28/02/2021
-*/
+** 26/02/2024 */
 
 #include <iostream>
 
@@ -13,19 +11,31 @@ using namespace std;
 ** attraverso il nome unico della struttura.
 */
 
-struct numeri
-{
-    int val_uno;
-    float val_due;
+struct persona {
+  string nome;
+  int eta;
 };
 
+typedef struct {
+  int uno;
+  int due;
+} COPPIA;
 
-int main()
-{
-  struct numeri n;
-  n.val_uno = 100;
-  cout <<  "1) n.val_uno = " << n.val_uno << " - " << "n.val_due = " << n.val_due << endl;
-  n.val_due = 33.33;
-  cout <<  "2) n.val_uno = " << n.val_uno << " - " << "n.val_due = " << n.val_due << endl;
+
+int main() {
+  struct persona gigi, gigietto;
+
+  COPPIA coppia_eta;
+  coppia_eta.uno = 17;
+  coppia_eta.due = 7;
+
+  gigi.nome = "Luigi";
+  gigi.eta = coppia_eta.uno;
+  gigietto.nome = "Luigino";
+  gigietto.eta = coppia_eta.due;
+
+  cout << "Gigi si chiama " << gigi.nome << " e ha " << gigi.eta << " anni." << endl;
+  cout << "Gigietto si chiama " << gigietto.nome << " e ha " << gigietto.eta << " anni." << endl;
+
   return 0;
 }
