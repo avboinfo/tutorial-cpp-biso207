@@ -43,7 +43,8 @@ class mastermind {
 
         // metodo per generare il codice segreto
         void generate_secret_code() {
-            srand(time(NULL));  
+            srand(time(NULL)); 
+            std::cout << "encripted code: ****" << std::endl;
             for (int i=0; i<DIM_VALID_ATTEMPT; i++) {
                 int num_random = rand()% 10; // valore minimo = 0; valore massimo = 9 => numero più piccolo = 0000; numero più grande = 9999
                 // controllo per evitare che venga generato un numero uguale
@@ -54,7 +55,6 @@ class mastermind {
                     }
                 }
                 secret_code[i] = num_random;
-                std::cout <<secret_code[i];
             }
         }
 
@@ -74,15 +74,15 @@ class mastermind {
             do {
                 std::cout << std::endl << "attempt " << attempts + 1 << ": ";
                 std::getline(std::cin, last_attempt); // il metodo getline consente di leggere anche i caratteri dopo gli spazi
-            } while(!clear_input());
+            } while(!clear_input() && attempts < 9);
             attempts++;
-            stop = attempt_result();
+            stop = attempt_result(attempts);
 
             return stop;
         }
 
         // metodo per confrontare il codice segreto con quello dell'utente
-        bool attempt_result() {
+        bool attempt_result(int attempts) {
             strike = 0;
             ball = 0;
             for (int i=0; i<DIM_VALID_ATTEMPT; i++) {
@@ -97,12 +97,22 @@ class mastermind {
             }
 
             if (strike == 4) {
-                std::cout << std::endl << "you won! code decripted" << std::endl;
+                std::cout << std::endl << "you won! encripted code: ";
+                for (int i=0; i<DIM_VALID_ATTEMPT; i++) {
+                    std::cout << secret_code[i];
+                }
                 stop = false;
             }
             else {
                 std::cout << std::endl << "strike: " << strike << " - ball: " << ball << std::endl;
                 stop = true;
+            }
+
+            if (attempts == 9) {
+                std::cout << "you lost! encripted code: ";
+                for (int i=0; i<DIM_VALID_ATTEMPT; i++) {
+                    std::cout << secret_code[i];
+                }
             }
 
             return stop;

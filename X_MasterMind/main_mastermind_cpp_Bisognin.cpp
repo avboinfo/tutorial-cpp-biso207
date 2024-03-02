@@ -4,12 +4,14 @@
 using namespace std;
 
 int main(int argc, char const *argv[]) {
-    int cont = 0;
+    int cont = 0, attempts = 0;
     bool stop = true;
+
+    cout << "MASTERMIND" << endl;
+
     mastermind gioco = mastermind();
-    while (cont < 9 && stop) {
+    while (stop) {
         stop = gioco.new_attempt();
-        cont++;
     }
 
     return 0;
