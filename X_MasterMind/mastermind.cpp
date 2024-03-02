@@ -9,6 +9,7 @@ class mastermind {
     private:
         int attempts, strike, ball;
         std::string last_attempt;
+        bool stop;
 
         static const int DIM_VALID_ATTEMPT = 4; // 'const' per renderlo immutabile nell'intero codice e 'static' per renderlo comune agli oggetti della classe
         int valid_attempt[DIM_VALID_ATTEMPT]; // => array di 4 celle per l'inserimento di SOLO 4 valori per tentativo
@@ -44,7 +45,16 @@ class mastermind {
         void generate_secret_code() {
             srand(time(NULL));  
             for (int i=0; i<DIM_VALID_ATTEMPT; i++) {
-                secret_code[i] = rand()% 10; // valore minimo = 0; valore massimo = 9 => numero più piccolo = 0000; numero più grande = 9999
+                int num_random = rand()% 10; // valore minimo = 0; valore massimo = 9 => numero più piccolo = 0000; numero più grande = 9999
+                // controllo per evitare che venga generato un numero uguale
+                for (int j=0; j<i; j++) {
+                    if (num_random == secret_code[j]) {
+                        num_random = rand()% 10;
+                        j=0;
+                    }
+                }
+                secret_code[i] = num_random;
+                std::cout <<secret_code[i];
             }
         }
 
@@ -60,32 +70,41 @@ class mastermind {
         }
 
         // metodo per inserire una nuova giocata
-        void new_attempt() {
+        bool new_attempt() {
             do {
                 std::cout << std::endl << "attempt " << attempts + 1 << ": ";
                 std::getline(std::cin, last_attempt); // il metodo getline consente di leggere anche i caratteri dopo gli spazi
             } while(!clear_input());
             attempts++;
-            attempt_result();
+            stop = attempt_result();
+
+            return stop;
         }
 
         // metodo per confrontare il codice segreto con quello dell'utente
-        void attempt_result() {
+        bool attempt_result() {
             strike = 0;
             ball = 0;
             for (int i=0; i<DIM_VALID_ATTEMPT; i++) {
+                if (valid_attempt[i] == secret_code[i]) {
+                    strike++;
+                }
                 for (int j=0; j<DIM_VALID_ATTEMPT; j++) {
                     if (valid_attempt[i] == secret_code[j]) {
                         ball++;
                     }
                 }
-                if (valid_attempt[i] == secret_code[i]) {
-                    strike++;
-                }
             }
+
             if (strike == 4) {
-                std::cout << std::endl << "strike: " << strike << " - ball: " << ball << std::endl;
+                std::cout << std::endl << "you won! code decripted" << std::endl;
+                stop = false;
             }
-            std::cout << std::endl << "strike: " << strike << " - ball: " << ball << std::endl;
+            else {
+                std::cout << std::endl << "strike: " << strike << " - ball: " << ball << std::endl;
+                stop = true;
+            }
+
+            return stop;
         }
-    };
+};
