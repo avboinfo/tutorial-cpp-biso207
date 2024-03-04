@@ -14,18 +14,20 @@ class Vettore {
         int * v;
 
     public:
-        Vettore(int d) {
-            dim = d;
-            delta = 10;
+        Vettore(int d, int delta) {
+            this -> dim = d;
+            this -> delta = delta;
             len = 0;
             v = new int(dim); // allocazione dinamica del vettore
         }
 
         void add(int n) {
             if (len == dim) {
+                cout << "estendo da " << dim << " a " << dim+delta << endl;
                 int * nuovov = new int[dim + delta];
                 for (int i=0; i<dim; i++) nuovov[i] = v[i];
                 dim += delta;
+                delete v;
                 v = nuovov;
             }
             v[len] = n;
@@ -43,9 +45,9 @@ class Vettore {
 
 int main() {
 
-    Vettore vett(10);
+    Vettore vett(10, 2);
 
-    for (int i=0; i<15; i++) vett.add(33+i);
+    for (int i=0; i<100; i++) vett.add(i);
     
     vett.print();
 
