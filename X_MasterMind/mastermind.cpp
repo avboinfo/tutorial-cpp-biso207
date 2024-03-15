@@ -89,9 +89,11 @@ class mastermind {
                 if (valid_attempt[i] == secret_code[i]) {
                     strike++;
                 }
-                for (int j=0; j<DIM_VALID_ATTEMPT; j++) {
-                    if (valid_attempt[i] == secret_code[j]) {
-                        ball++;
+                else {
+                    for (int j=0; j<DIM_VALID_ATTEMPT; j++) {
+                        if (valid_attempt[i] == secret_code[j]) {
+                            ball++;
+                        }
                     }
                 }
             }
@@ -113,6 +115,7 @@ class mastermind {
                 for (int i=0; i<DIM_VALID_ATTEMPT; i++) {
                     std::cout << secret_code[i];
                 }
+                stop = false;
             }
 
             return stop;
