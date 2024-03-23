@@ -7,7 +7,7 @@ int main(int argc, char const *argv[]) {
     int cont = 0, attempts = 0;
     bool stop = true;
 
-    cout << "MASTERMIND" << endl;
+    cout << endl << "MASTERMIND" << endl;
 
     mastermind gioco = mastermind();
     while (stop) {
