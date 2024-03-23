@@ -13,7 +13,7 @@ class mastermind {
 
         static const int DIM_VALID_ATTEMPT = 4; // 'const' per renderlo immutabile nell'intero codice e 'static' per renderlo comune agli oggetti della classe
         int valid_attempt[DIM_VALID_ATTEMPT]; // => array di 4 celle per l'inserimento di SOLO 4 valori per tentativo
-        
+        int controlled[DIM_VALID_ATTEMPT]; // array per inserire i valore controllati
         int secret_code[DIM_VALID_ATTEMPT];
 
         // metodo per controllare i valori digitati dall'utente durante una giocata
@@ -47,14 +47,11 @@ class mastermind {
             std::cout << "encripted code: ****" << std::endl;
             for (int i=0; i<DIM_VALID_ATTEMPT; i++) {
                 int num_random = rand()% 10; // valore minimo = 0; valore massimo = 9 => numero più piccolo = 0000; numero più grande = 9999
-                // controllo per evitare che venga generato un numero uguale
-                for (int j=0; j<i; j++) {
-                    if (num_random == secret_code[j]) {
-                        num_random = rand()% 10;
-                        j=0;
-                    }
-                }
                 secret_code[i] = num_random;
+            }
+
+            for (int i=0; i<DIM_VALID_ATTEMPT; i++) {
+                std::cout << secret_code[i];
             }
         }
 
@@ -91,8 +88,9 @@ class mastermind {
                 }
                 else {
                     for (int j=0; j<DIM_VALID_ATTEMPT; j++) {
-                        if (valid_attempt[i] == secret_code[j]) {
+                        if (valid_attempt[i] == secret_code[j] && valid_attempt[i] != controlled[i]) {
                             ball++;
+                            controlled[i] = valid_attempt[i];
                         }
                     }
                 }
