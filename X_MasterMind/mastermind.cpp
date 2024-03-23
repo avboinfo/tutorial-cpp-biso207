@@ -3,6 +3,11 @@
 #include <cstdlib>
 #include <ctime>
 
+#define GRN "\e[0;32m" // colore verde
+#define CYN "\e[0;36m" // color cyan
+#define RED "\e[0;31m" // color red
+#define NC "\e[0m" // No Color => white
+
 // sconsigliato per le classi usare il namespace std per via di possibili conflitti con il main durante la compilazione
 
 class mastermind {
@@ -21,7 +26,6 @@ class mastermind {
                 std::cout << std::endl << "invalid input, digit again" << std::endl;
                 return false;
             }
-            int j=0;
 
             for (int i=0; i<last_attempt.size(); i++) {
                 char c = last_attempt[i];
@@ -43,7 +47,7 @@ class mastermind {
         // metodo per generare il codice segreto
         void generate_secret_code() {
             srand(time(NULL)); 
-            std::cout << "encripted code: ****" << std::endl;
+            std::cout << std::endl << "encripted code: ****" << std::endl;
             for (int i=0; i<DIM_VALID_ATTEMPT; i++) {
                 int num_random = rand()% 10; // valore minimo = 0; valore massimo = 9 => numero più piccolo = 0000; numero più grande = 9999
                 secret_code[i] = num_random;
@@ -64,7 +68,7 @@ class mastermind {
         // metodo per inserire una nuova giocata
         bool new_attempt() {
             do {
-                std::cout << std::endl << "attempt " << attempts + 1 << ": ";
+                std::cout << std::endl << CYN "attempt "<< attempts + 1 << ": " NC;
                 std::getline(std::cin, last_attempt); // il metodo getline consente di leggere anche i caratteri dopo gli spazi
             } while(!clear_input() && attempts < 9);
             attempts++;
@@ -92,22 +96,24 @@ class mastermind {
             }
 
             if (strike == 4) {
-                std::cout << std::endl << "you won! encripted code: ";
+                std::cout << std::endl << GRN "you won! encripted code: " NC;
                 for (int i=0; i<DIM_VALID_ATTEMPT; i++) {
                     std::cout << secret_code[i];
                 }
+                std::cout << std::endl;
                 stop = false;
             }
             else {
-                std::cout << std::endl << "strike: " << strike << " - ball: " << ball << std::endl;
+                std::cout << "strike: " << strike << " - ball: " << ball << std::endl;
                 stop = true;
             }
 
-            if (attempts == 9) {
-                std::cout << "you lost! encripted code: ";
+            if (attempts == 9 && stop) {
+                std::cout << RED "you lost! encripted code: " NC;
                 for (int i=0; i<DIM_VALID_ATTEMPT; i++) {
                     std::cout << secret_code[i];
                 }
+                std::cout << std::endl;
                 stop = false;
             }
 
