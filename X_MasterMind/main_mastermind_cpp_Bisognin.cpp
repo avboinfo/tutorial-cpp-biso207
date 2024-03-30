@@ -1,8 +1,9 @@
 #include <iostream>
+#include <limits>
 #include "mastermind.cpp"
 
-#define RED "\e[0;31m" // color red
-#define NC "\e[0m" // No Color => white
+#define RED "\e[0;31m" // colore rosso
+#define NC "\e[0m"     // Nessun colore => bianco
 
 using namespace std;
 
@@ -11,29 +12,29 @@ int main(int argc, char const *argv[]) {
     bool stop = true;
     char scelta;
 
-    cout << RED "MASTERMIND" NC<< endl;
+    cout << RED "MASTERMIND" NC << endl;
 
     mastermind gioco = mastermind();
-    while (stop) {
+    do {
         stop = gioco.new_attempt();
-        
+
         // richiesta all'utente di riniziare di giocare o meno dopo vittoria o sconfitta
         if (!stop) {
-            cout << endl << "play again? [y] yes; [n] no" << endl;
+            cout << endl << "Vuoi giocare di nuovo? [y] sì; [n] no: ";
             cin >> scelta;
-            fflush(stdin);
             if (scelta == 'y') {
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 stop = true;
                 gioco = mastermind();
-            }
-            else if (scelta == 'n') {
+            } else if (scelta == 'n') {
                 stop = false;
-            }
-            else if (scelta != 'n' || scelta != 'y') {
-                while (scelta != 'n' || scelta != 'y') {
-                    cout << endl << "invalid input! [y] yes; [n] no" << endl;
+            } else {
+                while (scelta != 'n' && scelta != 'y') {
+                    cout << "Input non valido.";
+                    cout << endl << "Vuoi giocare di nuovo? [y] sì; [n] no: ";
                     cin >> scelta;
                     if (scelta == 'y') {
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
                         stop = true;
                         gioco = mastermind();
                     }
@@ -43,8 +44,8 @@ int main(int argc, char const *argv[]) {
                 }
             }
         }
-    }
+    } while (stop);
 
-    cout << endl << "thanks for playing" << endl;
+    cout << endl << "Grazie per aver giocato!" << endl;
     return 0;
 }

@@ -9,7 +9,7 @@
 #define NC "\e[0m" // No Color => white
 
 // sconsigliato per le classi usare il namespace std per via di possibili conflitti con il main durante la compilazione
-
+const int MAX_BUFFER_SIZE = 1024;
 class mastermind {
     private:
         int attempts, strike, ball;
@@ -72,6 +72,7 @@ class mastermind {
                 std::getline(std::cin, last_attempt); // il metodo getline consente di leggere anche i caratteri dopo gli spazi
             } while(!clear_input() && attempts < 9);
             attempts++;
+
             stop = attempt_result(attempts);
 
             return stop;
