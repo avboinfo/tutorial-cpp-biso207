@@ -1,7 +1,5 @@
-// Luca Bisognin - 25/03/2024 - esercizi sulla ricorsione in classe 
-/* pag A257 es 15: 
-scrivere una funzione ricorsiva c++ che assegnati due interi n ed m restituisca la somma di tutti gli interi compresi tra n ed m
-*/
+// Luca Bisognin - 25/03/2024 - esercizi sulla ricorsione
+/* pag A257 es 15: scrivere una funzione ricorsiva c++ che assegnati due interi n ed m restituisca la somma di tutti gli interi compresi tra n ed m */
 
 #include <iostream>
 
