@@ -7,6 +7,7 @@ scrivere una funzione ricorsiva c++ che assegnati due interi n ed m restituisca 
 
 using namespace std;
 
+// funzione ricorsiva per sommare i numeri compresi tra n ed m
 int somma_num(int somma, int n, int m) {
     if(n<=m) {
         somma += n;
@@ -16,6 +17,7 @@ int somma_num(int somma, int n, int m) {
     else return somma;
 }
 
+// correzione 
 int somma_num_prof(int n, int m) {
     if (n>m) return 0;
     if (n==m) return m;
