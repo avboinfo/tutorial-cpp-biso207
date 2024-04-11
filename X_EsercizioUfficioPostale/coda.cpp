@@ -37,11 +37,11 @@ int main() {
     Coda c = Coda(1000);
 
     c.stampa();
-    c.enter(100); 
-    c.enter(120);
-    c.enter(75);
+    c.enter(56); 
+    c.enter(3);
+    c.enter(45);
     c.exit();
-    c.enter(56);
+    c.enter(11);
     c.stampa();
 
     return 0;

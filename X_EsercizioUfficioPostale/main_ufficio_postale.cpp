@@ -1,5 +1,5 @@
 #include <iostream>
-#include "class_ufficio_postale.cpp"
+#include "Ufficio.cpp"
 
 using namespace std;
 
