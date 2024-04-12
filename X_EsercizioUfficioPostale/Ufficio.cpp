@@ -50,6 +50,10 @@ class Ufficio {
                 cout << "[S] spedizione: " << cont_s << " clienti in fila"<< endl;
                 cout << "[R] ricezione: " << cont_r << " clienti in fila"<< endl;
                 cout << "[F] finanziario: " << cont_f << " clienti in fila" << endl;
+                cout << endl;
+                cout << "[S] exit: rimuovi il primo utente dalla fila S" << endl;
+                cout << "[R] exit: rimuovi il primo utente dalla fila R" << endl;
+                cout << "[F] exit: rimuovi il primo utente dalla fila F" << endl;
                 getline(cin, scelta);
                 if (codice == 99) codice = 0;
                 if (scelta == "S" || scelta == "S exit") {
