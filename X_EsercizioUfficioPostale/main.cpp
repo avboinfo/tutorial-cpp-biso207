@@ -4,7 +4,7 @@
 using namespace std;
 
 int main() {
-    cout << "BENVENUTO ALLE POSTE ITALIANE";
+    cout << endl << "BENVENUTO ALLE POSTE ITALIANE" << endl;
     Ufficio ufficio_postale = Ufficio();
     ufficio_postale.arrivo_utente();
 
