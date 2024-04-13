@@ -11,7 +11,8 @@ class Ufficio {
 
         int servizio_s() {
             if (scelta == "S exit") {
-                return pila_clienti_s[start_s++];
+                if (start_s >= cont_s) { cout << endl << "nessun cliente in fila" << endl; return 0; }
+                else return pila_clienti_s[start_s++];
             }
             // aggiunta del cliente nella pila della fila spedizione
             pila_clienti_s[cont_s++] = codice;
@@ -20,7 +21,8 @@ class Ufficio {
 
         int servizio_r() {
             if (scelta == "R exit") {
-                return pila_clienti_r[start_r++];
+                if (start_r >= cont_r) { cout << endl << "nessun cliente in fila" << endl; return 0; }
+                else return pila_clienti_r[start_r++];
             }
             // aggiunta del cliente nella pila della fila ricezione
             pila_clienti_r[cont_r++] = codice;
@@ -29,7 +31,8 @@ class Ufficio {
 
         int servizio_f() {
             if (scelta == "F exit") {
-                return pila_clienti_f[start_f++];
+                if (start_f >= cont_f) { cout << endl << "nessun cliente in fila" << endl; return 0; }
+                else return pila_clienti_f[start_f++];
             }
             // aggiunta del cliente nella pila della fila finanziario
             pila_clienti_f[cont_f++] = codice;
@@ -51,9 +54,9 @@ class Ufficio {
                 cout << "[R] ricezione: " << cont_r << " clienti in fila"<< endl;
                 cout << "[F] finanziario: " << cont_f << " clienti in fila" << endl;
                 cout << endl;
-                cout << "[S] exit: rimuovi il primo utente dalla fila S" << endl;
-                cout << "[R] exit: rimuovi il primo utente dalla fila R" << endl;
-                cout << "[F] exit: rimuovi il primo utente dalla fila F" << endl;
+                cout << "[S] exit: rimuovi l'utente che ha finito dalla fila S" << endl;
+                cout << "[R] exit: rimuovi l'utente che ha finito dalla fila R" << endl;
+                cout << "[F] exit: rimuovi l'utente che ha finito dalla fila F" << endl;
                 getline(cin, scelta);
                 if (codice == 99) codice = 0;
                 if (scelta == "S" || scelta == "S exit") {
