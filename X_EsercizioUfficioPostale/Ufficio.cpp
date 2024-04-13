@@ -64,6 +64,7 @@ class Ufficio {
             // controllo che l'utente abbia o meno la carta poste pay
             if (carta == 's') {
                 cout << endl <<GRN "hai avuto la priorità e sei stato servito" NC<< endl;
+                codice--;
             }
             else {
                 cout << endl <<GRN "sei stato inserito in coda correttamente" NC<< endl;
@@ -85,15 +86,16 @@ class Ufficio {
         }
 
         void arrivo_utente() {
-            while (true) {
+            while (scelta != "chiude le poste") {
                 cout << endl << "scegli il servizio" << endl;
-                cout << "[S] spedizione: " << cont_s << " clienti in fila"<< endl;
-                cout << "[R] ricezione: " << cont_r << " clienti in fila"<< endl;
-                cout << "[F] finanziario: " << cont_f << " clienti in fila" << endl;
+                cout << "[s] spedizione: " << cont_s << " clienti in fila"<< endl;
+                cout << "[r] ricezione: " << cont_r << " clienti in fila"<< endl;
+                cout << "[f] finanziario: " << cont_f << " clienti in fila" << endl;
                 cout << endl;
-                cout << "[S exit]: rimuovi l'utente che ha finito dalla fila S" << endl;
-                cout << "[R exit]: rimuovi l'utente che ha finito dalla fila R" << endl;
-                cout << "[F exit]: rimuovi l'utente che ha finito dalla fila F" << endl;
+                cout << "[s exit]: rimuovi l'utente che ha finito dalla fila S" << endl;
+                cout << "[r exit]: rimuovi l'utente che ha finito dalla fila R" << endl;
+                cout << "[f exit]: rimuovi l'utente che ha finito dalla fila F" << endl;
+                cout << endl << "[chiude le poste]: termini il programma" << endl;
 
                 cout << endl << "servizio: ";
                 getline(cin, scelta);
@@ -102,10 +104,10 @@ class Ufficio {
                 if (codice == 99) codice = 0; // codice identificativo del clinte per ogni servizio
 
                 // servizio spedizione
-                if (scelta == "S" || scelta == "S exit") {
+                if (scelta == "s" || scelta == "s exit") {
                     servizio_s();
                     // stampa della pila dei clienti in fila servizio
-                    if (start_s >= cont_s) cout <<RED "nessun cliente in coda spedizione" NC<< endl;
+                    if (start_s >= cont_s) cout << endl <<RED "nessun cliente in coda spedizione" NC<< endl;
                     else cout << endl <<CYN "clienti in coda servizio:" NC<< endl;
                     for (int i=start_s; i<cont_s; i++) {
                         cout << "code: " << pila_clienti_s[i] << endl;
@@ -114,10 +116,10 @@ class Ufficio {
                 }
 
                 // servizio ricezione
-                else if (scelta == "R" || scelta == "R exit") {
+                else if (scelta == "r" || scelta == "r exit") {
                     servizio_r();
                     // stampa della pila dei clienti in fila ricezione
-                    if (start_r >= cont_r) cout <<RED "nessun cliente in coda ricezione" NC<< endl;
+                    if (start_r >= cont_r) cout << endl <<RED "nessun cliente in coda ricezione" NC<< endl;
                     else cout << endl <<CYN "clienti in coda ricezione:" NC<< endl;
                     for (int i=start_r; i<cont_r; i++) {
                         cout << "code: " << pila_clienti_r[i] << endl;
@@ -126,7 +128,7 @@ class Ufficio {
                 }
                 
                 // servizio finanziario
-                else if (scelta == "F" || scelta == "F exit") {
+                else if (scelta == "f" || scelta == "f exit") {
                     servizio_f();
                     // stampa della pila dei clienti in fila finanziario
                     if (start_f >= cont_f) cout << endl <<RED "nessun cliente in coda finanziario" NC<< endl;
@@ -136,7 +138,7 @@ class Ufficio {
                         cout << "------------" << endl;
                     }
                 }
-                else { cout <<RED "digitazione errata!\n" NC<< endl; }
+                else { cout <<RED "digitazione errata!\n" NC; }
                 codice++;
             }
         }

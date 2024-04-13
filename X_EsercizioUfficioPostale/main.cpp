@@ -8,7 +8,7 @@
 using namespace std;
 
 int main() {
-    cout << endl << RED "BENVENUTO ALLE POSTE ITALIANE" NC << endl;
+    cout << RED "BENVENUTO ALLE POSTE ITALIANE" NC << endl;
     Ufficio ufficio_postale = Ufficio();
     ufficio_postale.arrivo_utente();
 
