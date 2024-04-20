@@ -1,76 +1,60 @@
-/*
- * BattleShipOne - Una battaglia navale contro il computer sulla costa
- * Author: Sandro Gallo
- * Date: 4 december 2020
- * Help sui codici nella mappa: 0-empty, 1-ship, 2-bomb, 3-strike
- */
+/* 
+classe BattleShip per giocare alla Battaglia Navale
+Luca Bisognin - 20/04/2024
+*/
 
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
+
+#include "BattleField.cpp"
 
 using namespace std;
 
-void initialize(int v[], int l) {
-    for (int i = 0; i < l; i++) v[i] = 0;
-}
+class BattleShip {
+    private:
+        int x, y;
+        BattleField mappa, campo;
+    public:
+        BattleShip() {
+            mappa = BattleField('-');
+            campo = BattleField(' ');
+            // posizionamento navi sul campo di gioco e aggiornamento della mappa nascosta
+            campo.place_ship_orizontal(3); // nave orizzontale di len 3 
+            campo.place_ship_orizontal(4); // nave orizzontale di len 4
+            campo.place_ship_vertical(2); // nave verticale di len 2
+            campo.place_ship_vertical(4); // nave verticale di len 4
 
-void show(int v[], int l) {
-    for (int i = 0; i < l; i++) {
-        switch (v[i]) {
-        case 0: cout << "O "; break;
-        case 1: cout << "O "; break;
-        case 2: cout << "- "; break;
-        case 3: cout << "* ";
         }
-    }
-    cout << endl;
-}
 
-void arrange(int v[], int l) {
-    srand((unsigned int)time(NULL));
-    int n = rand() % (l - 1); // elle meno uno !!!!!!
-    v[n] = 1;
-    v[n + 1] = 1;
-}
+        void play() {
+            srand(time(NULL));
+            // lancia 20 bombe a caso
+            for (int i=0; i<20; i++) {
+                cout << "digit coordinates " << i+1 << "/20\n";
+                cout << "x: ";
+                cin >> x;
+                cout << "y: ";
+                cin >> y;
 
-void launch(int v[], int l) {
-    int p = 0;
-    while (p<1 || p>l) {
-        cout << "Inserire le coordinate in cui sgangiare la bomba (1.." << l << "): ";
-        cin >> p;
-    }
-    p--;
-    if (v[p] == 0) v[p] = 2;
-    if (v[p] == 1) v[p] = 3;
-}
+                // controllo che le coordinate non sia sbagliate
+                while (x>10 || x<0 || y>10 || y<0) {
+                    cout << endl << "invalid coordinates. digit again";
+                    cout << "x: ";
+                    cin >> x;
+                    cout << "y: ";
+                    cin >> y;
+                }
 
-bool weWon(int v[], int l) {
-    for (int i = 0; i < l; i++) {
-        if (v[i] == 1) return false;
-    }
-    return true;
-}
+                // controllo delle coordinate nella mappa
+                if (mappa.get(y, x) == '*' || mappa.get(y, x) == 'O') continue; // coordinata già digitata
+                if (campo.get(y, x) == '-' || campo.get(y, x) == '|') { // nave colpita
+                    mappa.put(y, x, '*');
+                    campo.put(y, x, '*');
+                } else mappa.put(y, x, 'O'); // colpito il vuoto
 
-int main()
-{
-    cout << "Programma BattleShipOne in esecuzione" << endl;
-    int num_bomb = 0;
-    const int MAPLENGTH = 10;
-    int map[MAPLENGTH];
-    initialize(map, MAPLENGTH);
-    arrange(map, MAPLENGTH);
-    show(map, MAPLENGTH);
-    while (true) {
-        num_bomb++;
-        launch(map, MAPLENGTH);
-        show(map, MAPLENGTH);
-        if (weWon(map, MAPLENGTH)) break;
-    }
-    if (num_bomb <= 3) cout << "Complimenti";
-    else if (num_bomb <= 5) cout << "Bravino";
-    else if (num_bomb <= 7) cout << "Accidenti";
-    cout << " hai distrutto la flotta nemica utilizzando " << num_bomb << " bombe." << endl;
-    return 0;
-}
+                mappa.stampa(); // mappa aggiornata
+            }
 
+            cout << endl << "\n- updated map - bombs dropped" << endl;
+            mappa.stampa(); // mappa aggiornata
+        }
+};
