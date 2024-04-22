@@ -1,6 +1,6 @@
 /* 
 Main per giocare alla Battaglia Navale
-Luca Bisognin - 20/04/2024
+Luca Bisognin - 22/04/2024
 */
 
 #include <iostream>

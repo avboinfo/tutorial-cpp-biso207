@@ -1,6 +1,6 @@
 /* 
 classe BattleField per modificare e lavorare sulle matrici
-Luca Bisognin - 20/04/2024
+Luca Bisognin - 22/04/2024
 */
 
 #include <iostream>
@@ -8,18 +8,29 @@ Luca Bisognin - 20/04/2024
 
 using namespace std;
 
-const int DIM = 10;
-const char HIT = '*';
-const char MISSED = 'O';
+#define GRN "\e[0;32m" // colore verde
+#define RED "\e[0;31m" // color red
+#define CYN "\e[0;36m" // color cyan
+#define NC "\e[0m" // No Color => white
+
+const int DIM = 5;
+const string HIT = (GRN " * " NC);
+const string MISSED = (RED " O " NC);
+const string SHIP = (NC " x " NC);
+const string WATER = (CYN " - " NC);
+const string QUIT = (NC " $ " NC);
 
 class BattleField {
     private:
-        char m[DIM][DIM];
+        string m[DIM][DIM];
     public:
         // primo costruttore
-        BattleField(char char_m) {
+        BattleField(string char_m) {
             for (int i=0; i<DIM; i++) {
-                for (int j=0; j<DIM; j++) m[i][j] = char_m;
+                for (int j=0; j<DIM; j++) {
+                    if (i==0 && j == 0) m[i][j] = QUIT;
+                    else m[i][j] = char_m;
+                }
             }
         }
         // secondo costruttore
@@ -30,11 +41,11 @@ class BattleField {
         }
 
         // metodo per ricevere in input le coordinate della bomba
-        char get( int x, int y ) {
+        string get( int x, int y ) {
             return m[x][y];
         }
         // posizionamento della bomba sulla mappa
-        void put( int x, int y, char c ) {
+        void put( int x, int y, string c ) {
             m[x][y] = c;
         }
 
@@ -42,10 +53,10 @@ class BattleField {
         void stampa() {
             // ELEMENTI GRAFICI PER MIGLIORARE LA LETTURA DELLA BattleField
             // numeri superiori e linea superiore
-            cout << setw(4) << "x |";
-            for (int i=0; i<DIM; i++) cout << setw(4) << i;
+            cout << setw(2) << " $ |";
+            for (int i=0; i<DIM; i++) cout << setw(3) << i;
             cout << endl;
-            for (int i=0; i<DIM; i++) cout << "-----";
+            for (int i=0; i<DIM; i++) cout << "----";
             cout << endl;
 
             // stampa della BattleField
@@ -59,29 +70,24 @@ class BattleField {
 
             // linea inferiore di chiusura BattleField
             for (int i=0; i<DIM; i++) {
-                cout << "-----";
+                cout << "----";
             }
             cout << endl;
         }
 
-        // metodo per lanciare una bomba e disegnare una x sulla coordinata scelta
-        void bomb() {
-            int x = rand()% DIM;
-            int y = rand()% DIM;
-            m[x][y] = '*';
-        }
-
         // metodo per piazzare le navi in verticale
         void place_ship_vertical(int len) {
+            srand(time(NULL));
             int x = rand()% (DIM-len);
             int y = rand()% (DIM-len);
-            for (int i=0; i<len; i++) m[x+i][y] = '|';
+            for (int i=0; i<len; i++) m[x+i][y] = SHIP;
         }
 
         // metodo per piazzare le navi in orizzontale
         void place_ship_orizontal(int len) {
+            srand(time(NULL));
             int x = rand()% (DIM-len);
             int y = rand()% (DIM-len);
-            for (int i=0; i<len; i++) m[x][y+i] = 154;
+            for (int i=0; i<len; i++) m[x][y+i] = SHIP;
         }
 };

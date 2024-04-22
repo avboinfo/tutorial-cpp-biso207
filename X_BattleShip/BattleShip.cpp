@@ -1,6 +1,6 @@
 /* 
 classe BattleShip per giocare alla Battaglia Navale
-Luca Bisognin - 20/04/2024
+Luca Bisognin - 22/04/2024
 */
 
 #include <iostream>
@@ -15,8 +15,8 @@ class BattleShip {
         BattleField mappa, campo;
     public:
         BattleShip() {
-            mappa = BattleField('-');
-            campo = BattleField(' ');
+            mappa = BattleField(WATER);
+            campo = BattleField(WATER);
             // posizionamento navi sul campo di gioco e aggiornamento della mappa nascosta
             campo.place_ship_orizontal(3); // nave orizzontale di len 3 
             campo.place_ship_orizontal(4); // nave orizzontale di len 4
@@ -26,35 +26,60 @@ class BattleShip {
         }
 
         void play() {
-            srand(time(NULL));
-            // lancia 20 bombe a caso
+            while (!game_over()) {
+                mappa.stampa(); // mappa aggiornata
+                if (!put_bomb()) break;
+            }
+
+            campo.stampa(); // stampa del campo con le navi nascoste mostrate
+        }
+
+        bool put_bomb() {
+            // lancio di 20 bombe con coordinate inserite dall'utente
             for (int i=0; i<20; i++) {
-                cout << "digit coordinates " << i+1 << "/20\n";
+                cout << "\ndigit coordinates " << i+1 << "/20 - (10, 10) to quit\n";
                 cout << "x: ";
                 cin >> x;
                 cout << "y: ";
                 cin >> y;
+                
+                // controllo per quittare la partita
+                if (x==10 || y==10) return false;
 
                 // controllo che le coordinate non sia sbagliate
-                while (x>10 || x<0 || y>10 || y<0) {
-                    cout << endl << "invalid coordinates. digit again";
-                    cout << "x: ";
-                    cin >> x;
-                    cout << "y: ";
-                    cin >> y;
+                if (x<=9|| x>=0 || y<=9 || y>=0);
+                else {
+                    cout << endl << "invalid coordinates. digit again\n";
+                    i--;
+                    continue; // coordinata errata
                 }
 
                 // controllo delle coordinate nella mappa
-                if (mappa.get(y, x) == '*' || mappa.get(y, x) == 'O') continue; // coordinata già digitata
-                if (campo.get(y, x) == '-' || campo.get(y, x) == '|') { // nave colpita
-                    mappa.put(y, x, '*');
-                    campo.put(y, x, '*');
-                } else mappa.put(y, x, 'O'); // colpito il vuoto
+                if (mappa.get(y, x) == HIT || mappa.get(y, x) == MISSED) {
+                    cout << "coordinate already digitated\n";
+                    i--;
+                    continue; // coordinata già digitata
+                }
+
+                if (campo.get(y, x) == SHIP) { // nave colpita
+                    mappa.put(y, x, HIT);
+                    campo.put(y, x, HIT);
+                } else mappa.put(y, x, MISSED); // colpito il vuoto
 
                 mappa.stampa(); // mappa aggiornata
             }
 
             cout << endl << "\n- updated map - bombs dropped" << endl;
-            mappa.stampa(); // mappa aggiornata
+            return true;
+        }
+
+        bool game_over() {
+            int cont = 0;
+            for (int i=0; i<DIM; i++) {
+                for (int j=0; j<DIM; i++) {
+                    if (campo.get(i, j) == SHIP) return false;
+                }
+            }
+            return true;
         }
 };
