@@ -31,23 +31,24 @@ class BattleShip {
                 if (!put_bomb()) break;
             }
 
+            cout << endl << "GAME OVER" << endl;
             campo.stampa(); // stampa del campo con le navi nascoste mostrate
         }
 
         bool put_bomb() {
             // lancio di 20 bombe con coordinate inserite dall'utente
-            for (int i=0; i<20; i++) {
-                cout << "\ndigit coordinates " << i+1 << "/20 - (10, 10) to quit\n";
+            for (int i=0; i<DIM*3; i++) {
+                cout << "\ndigit coordinates " << i+1 << "/" << DIM*3 << " - (" << DIM << ", " << DIM << ") to quit\n";
                 cout << "x: ";
                 cin >> x;
                 cout << "y: ";
                 cin >> y;
                 
                 // controllo per quittare la partita
-                if (x==10 || y==10) return false;
+                if (x==DIM || y==DIM) return false;
 
-                // controllo che le coordinate non sia sbagliate
-                if (x<=9|| x>=0 || y<=9 || y>=0);
+                // controllo che le coordinate non siano sbagliate
+                if (x<DIM && x>=0 && y<DIM && y>=0);
                 else {
                     cout << endl << "invalid coordinates. digit again\n";
                     i--;
@@ -63,21 +64,19 @@ class BattleShip {
 
                 if (campo.get(y, x) == SHIP) { // nave colpita
                     mappa.put(y, x, HIT);
-                    campo.put(y, x, HIT);
+                    campo.put(y, x, SHIP_HIT);
                 } else mappa.put(y, x, MISSED); // colpito il vuoto
 
                 mappa.stampa(); // mappa aggiornata
             }
 
-            cout << endl << "\n- updated map - bombs dropped" << endl;
             return true;
         }
 
         bool game_over() {
-            int cont = 0;
             for (int i=0; i<DIM; i++) {
-                for (int j=0; j<DIM; i++) {
-                    if (campo.get(i, j) == SHIP) return false;
+                for (int j=0; j<DIM; j++) {
+                    if (campo.get(j, i) == SHIP) return false;
                 }
             }
             return true;

@@ -13,10 +13,11 @@ using namespace std;
 #define CYN "\e[0;36m" // color cyan
 #define NC "\e[0m" // No Color => white
 
-const int DIM = 5;
+const int DIM = 5; // dimension of matrix 
 const string HIT = (GRN " * " NC);
 const string MISSED = (RED " O " NC);
-const string SHIP = (NC " x " NC);
+const string SHIP = (RED " x " NC);
+const string SHIP_HIT = (GRN " x " NC);
 const string WATER = (CYN " - " NC);
 const string QUIT = (NC " $ " NC);
 
@@ -28,8 +29,7 @@ class BattleField {
         BattleField(string char_m) {
             for (int i=0; i<DIM; i++) {
                 for (int j=0; j<DIM; j++) {
-                    if (i==0 && j == 0) m[i][j] = QUIT;
-                    else m[i][j] = char_m;
+                    m[i][j] = char_m;
                 }
             }
         }
@@ -41,11 +41,12 @@ class BattleField {
         }
 
         // metodo per ricevere in input le coordinate della bomba
-        string get( int x, int y ) {
+        string get(int x, int y) {
             return m[x][y];
         }
+
         // posizionamento della bomba sulla mappa
-        void put( int x, int y, string c ) {
+        void put(int x, int y, string c) {
             m[x][y] = c;
         }
 

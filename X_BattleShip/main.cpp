@@ -16,7 +16,7 @@ int main() {
 
     gioco.play();
 
-    cout << "THANKS FOR PLAYING\n\nDeveloped by BIGA Gaming";
+    cout << "\nTHANKS FOR PLAYING\n\nDeveloped by BIGA Gaming";
 
     return 0;
 }
