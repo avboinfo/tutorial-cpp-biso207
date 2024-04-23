@@ -1,6 +1,6 @@
 /* 
 classe BattleField per modificare e lavorare sulle matrici
-Luca Bisognin - 22/04/2024
+Luca Bisognin - 23/04/2024
 */
 
 #include <iostream>
@@ -55,14 +55,14 @@ class BattleField {
             // ELEMENTI GRAFICI PER MIGLIORARE LA LETTURA DELLA BattleField
             // numeri superiori e linea superiore
             cout << setw(2) << " $ |";
-            for (int i=0; i<DIM; i++) cout << setw(3) << i;
+            for (int i=0; i<DIM; i++) cout << setw(3) << i+1;
             cout << endl;
             for (int i=0; i<DIM; i++) cout << "----";
             cout << endl;
 
             // stampa della BattleField
             for (int i=0; i<DIM; i++) {
-                cout << setw(2) << i << " |"; // stampa dei numeri laterali
+                cout << setw(2) << i+1 << " |"; // stampa dei numeri laterali
                 for (int j=0; j<DIM; j++) {
                     cout << setw(4) << m[i][j];
                 }

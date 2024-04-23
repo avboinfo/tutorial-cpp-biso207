@@ -1,6 +1,6 @@
 /* 
 Main per giocare alla Battaglia Navale
-Luca Bisognin - 22/04/2024
+Luca Bisognin - 23/04/2024
 */
 
 #include <iostream>
@@ -16,7 +16,7 @@ int main() {
 
     gioco.play();
 
-    cout << "\nTHANKS FOR PLAYING\n\nDeveloped by BIGA Gaming";
+    cout << "\nTHANKS FOR PLAYING\n\nDeveloped by BIGA Gaming\n";
 
     return 0;
 }
